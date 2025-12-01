@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <fieldset style="border:none;padding:0;margin:0;">
+        <h2 style="margin:0 0 12px;font-family:Arial, Helvetica, sans-serif;">Create an account</h2>
+
+        <div style="display:flex;flex-direction:column;gap:10px;max-width:420px;font-family:Arial, Helvetica, sans-serif;">
+            <div style="display:flex;gap:10px;">
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">First name</div>
+                    <input type="text" name="firstName" required placeholder="First name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">Last name</div>
+                    <input type="text" name="lastName" required placeholder="Last name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+            </div>
+
+            <label>
+                <div style="font-size:13px;margin-bottom:4px;">Email</div>
+                <input type="email" name="email" required placeholder="you@example.com" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </label>
+
+            <label>
+                <div style="font-size:13px;margin-bottom:4px;">Username</div>
+                <input type="text" name="username" required minlength="3" placeholder="Choose a username" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </label>
+
+            <div style="display:flex;gap:10px;">
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">Password</div>
+                    <input id="password" type="password" name="password" required minlength="8" placeholder="At least 8 characters" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">Confirm password</div>
+                    <input id="confirm-password" type="password" name="confirmPassword" required placeholder="Repeat password" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+            </div>
+
+            <div style="display:flex;gap:10px;align-items:center;">
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;">
+                    <input id="showPwd" type="checkbox" aria-label="Show passwords">
+                    Show passwords
+                </label>
+
+                <label style="margin-left:auto;font-size:13px;">
+                    <div style="font-size:13px;margin-bottom:4px;">Phone (optional)</div>
+                    <input type="tel" name="phone" placeholder="+1 (555) 555-5555" style="padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+            </div>
+
+            <div style="display:flex;gap:10px;align-items:center;">
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">Date of birth</div>
+                    <input type="date" name="dob" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                </label>
+
+                <label style="flex:1;">
+                    <div style="font-size:13px;margin-bottom:4px;">Gender</div>
+                    <select name="gender" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                        <option value="" disabled selected>Choose</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Non-binary</option>
+                        <option>Prefer not to say</option>
+                    </select>
+                </label>
+            </div>
+
+            <label style="font-size:13px;">
+                <input type="checkbox" name="terms" required> I agree to the <a href="#" onclick="return false;">Terms & Conditions</a> and <a href="#" onclick="return false;">Privacy Policy</a>
+            </label>
+
+            <div style="display:flex;gap:10px;margin-top:6px;">
+                <button type="submit" style="flex:1;padding:10px 12px;background:#0069ff;color:#fff;border:none;border-radius:4px;cursor:pointer;">Create account</button>
+                <button type="reset" style="padding:10px 12px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;cursor:pointer;">Reset</button>
+            </div>
+
+            <div id="signup-msg" role="status" style="color:#b00020;font-size:13px;margin-top:6px;min-height:18px;"></div>
+        </div>
+    </fieldset>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const msg = document.getElementById('signup-msg');
+            const showChk = document.getElementById('showPwd');
+
+            showChk.addEventListener('change', () => {
+                const pw = document.getElementById('password');
+                const cpw = document.getElementById('confirm-password');
+                const type = showChk.checked ? 'text' : 'password';
+                pw.type = cpw.type = type;
+            });
+
+            form.addEventListener('submit', function (e) {
+                msg.textContent = '';
+                const pw = form.querySelector('#password').value;
+                const cpw = form.querySelector('#confirm-password').value;
+
+                if (pw.length < 8) {
+                    e.preventDefault();
+                    msg.textContent = 'Password must be at least 8 characters.';
+                    return;
+                }
+                if (pw !== cpw) {
+                    e.preventDefault();
+                    msg.textContent = 'Passwords do not match.';
+                    return;
+                }
+
+                // Example: prevent real submit for demo. Remove the next two lines to allow normal submission.
+                e.preventDefault();
+                msg.style.color = '#059669';
+                msg.textContent = 'Signup data looks good — form ready to submit.';
+            });
+        });
+        </script>
+    </form>
+</body>
+</html>
